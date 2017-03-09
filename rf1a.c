@@ -128,7 +128,7 @@ uint8_t ReadSingleReg(uint8_t addr)
 // *************************************************************************************************
 void WriteSingleReg(uint8_t addr, uint8_t value)
 {
-    volatile uint16_t i;
+    volatile uint16_t i __attribute__((unused));
     uint16_t int_state;
 
     ENTER_CRITICAL_SECTION(int_state);

@@ -294,6 +294,8 @@ uint8_t wbsl_writeBytes(uint8_t *startAddr, uint8_t size,  uint8_t *data)
 
     // Make sure that the comparison doesn't overflow at the End of the 16 bit address, make the
     // comparison in 32bit
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
     for (i = ((uint32_t)startAddr); i < ((uint32_t)startAddr) + ((uint32_t)size); i++)
     {
 #ifdef RAM_BASED_RFBSL
@@ -317,6 +319,7 @@ uint8_t wbsl_writeBytes(uint8_t *startAddr, uint8_t size,  uint8_t *data)
         } // if
 
     }     // for
+#pragma GCC diagnostic pop
     return ret_status;
 
 }
@@ -359,6 +362,10 @@ uint8_t wbsl_writePacket(void){
 #ifdef RAM_BASED_RFBSL
     wbsl_openFlashForWrite();
 #endif
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
+
     // Only if there is something to write
     if (packetSize)
     {
@@ -385,6 +392,8 @@ uint8_t wbsl_writePacket(void){
             ptrMemory += packetSize;
         }
     }
+
+#pragma GCC diagnostic pop
 
 #ifdef RAM_BASED_RFBSL
     wbsl_lockFlash();

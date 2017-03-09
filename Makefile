@@ -50,7 +50,7 @@ $(OBJS): wbsl.cflags
 wbsl.elf: $(OBJS)
 	@echo "\n>> Building $@ as target $(TARGET)"
 	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ $+
-	$(OBJDUMP) -w wbsl.elf  -S -t -D -x> disassembly
+	$(OBJDUMP) -w wbsl.elf  -S -t -D -x> wbsl.disassembly
 
 wbsl.txt: wbsl.elf
 	$(PYTHON) tools/memory.py -i $< -o $@
