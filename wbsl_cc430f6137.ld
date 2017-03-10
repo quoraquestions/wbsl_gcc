@@ -40,8 +40,7 @@ ENTRY(_start)
 MEMORY {
   SFR              : ORIGIN = 0x0000, LENGTH = 0x0010 /* END=0x0010, size 16 */
   BSL              : ORIGIN = 0x1000, LENGTH = 0x0800
-/*  RAM              : ORIGIN = 0x1D30, LENGTH = 0x0FFE /* END=0x2BFD, size 4094 */
-  RAM              : ORIGIN = 0x1D30, LENGTH = 0x1FFE /* END=0x2BFD, size 4094 */
+  RAM              : ORIGIN = 0x1D30, LENGTH = 0x0FFE /* END=0x2BFD, size 4094 */
   VECT1            : ORIGIN = 0xFF80, LENGTH = 0x0002
   VECT2            : ORIGIN = 0xFF82, LENGTH = 0x0002
   VECT3            : ORIGIN = 0xFF84, LENGTH = 0x0002

@@ -6,15 +6,15 @@ nohup.out
 *.s
 *.swp
 cscope.out
-
+wbsl.disassembly
 
 ### CLion project files ###
 *.tgz
 .idea/
 
 ### Firmware files ###
-openchronos.elf
-openchronos.txt
+wbsl.elf
+wbsl.txt
 
 ### Build directories ###
 doc
@@ -23,10 +23,7 @@ _build
 cmake-build-debug
 
 ### make artifacts ###
-config.h
-modinit.c
-drivers/rtca_now.h
-output.map
-openchronos.dep
-openchronos.dep.bak
-openchronos.cflags
+wbsl.map
+wbsl.dep
+wbsl.dep.bak
+wbsl.cflags
