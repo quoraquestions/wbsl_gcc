@@ -11,14 +11,19 @@ LINKER_FILE = "./wbsl_cc430f6137.ld"
 #
 CFLAGS      += $(CC_CMACH) $(CC_DMACH) -Wall  
 CFLAGS      += -fno-force-addr -finline-limit=1 -fno-schedule-insns
+
 CFLAGS      += -mhwmult=none -fshort-enums -Wl,-Map=wbsl.map,-verbose -T$(LINKER_FILE)
 LDFLAGS     = -L$(MSP430_TI)/include 
 
-CFLAGS_REL  += -Os -fdata-sections -ffunction-sections -fomit-frame-pointer -ggdb
+CFLAGS_REL  += -Os -fdata-sections -ffunction-sections -fomit-frame-pointer 
 LDFLAGS_REL += -Wl,--gc-sections -Wl,-s 
 
 CFLAGS_DBG  += -O1 -g3 -gdwarf-2 -ggdb
 LDFLAGS_DBG += -Wl,--gc-sections
+
+
+CFLAGS_REL_NOSTRIP  += -Os -fdata-sections -ffunction-sections -fomit-frame-pointer -g3 -gdwarf-2 -ggdb
+LDFLAGS_REL_NOSTRIP += -Wl,--gc-sections 
 
 # linker flags and include directories
 # Not really sure about this include. There must be a better way ?
