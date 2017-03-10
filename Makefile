@@ -10,8 +10,6 @@ BASH := $(shell which bash || which bash)
 .PHONY: install
 .PHONY: config
 .PHONY: depend
-.PHONY: doc
-.PHONY: httpdoc
 .PHONY: force
 
 all: wbsl.txt
