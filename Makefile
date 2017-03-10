@@ -69,6 +69,6 @@ clean: $(SUBDIRS)
 	@for subdir in $(SUBDIRS); do \
 		echo "Cleaning $$subdir .."; rm -f $$subdir/*.o; \
 	done
-	@rm -f *.o wbsl.elf wbsl.txt wbsl.cflags wbsl.dep output.map
+	@rm -f *.o wbsl.elf wbsl.txt wbsl.cflags wbsl.dep wbsl.map
 	@rm -f wbsl.dep.bak
 

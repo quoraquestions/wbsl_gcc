@@ -11,7 +11,7 @@ LINKER_FILE = "./wbsl_cc430f6137.ld"
 #
 CFLAGS      += $(CC_CMACH) $(CC_DMACH) -Wall  
 CFLAGS      += -fno-force-addr -finline-limit=1 -fno-schedule-insns
-CFLAGS      += -mhwmult=none -fshort-enums -Wl,-Map=output.map,-verbose -T$(LINKER_FILE)
+CFLAGS      += -mhwmult=none -fshort-enums -Wl,-Map=wbsl.map,-verbose -T$(LINKER_FILE)
 LDFLAGS     = -L$(MSP430_TI)/include 
 
 CFLAGS_REL  += -Os -fdata-sections -ffunction-sections -fomit-frame-pointer -ggdb
