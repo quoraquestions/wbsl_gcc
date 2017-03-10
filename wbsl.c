@@ -119,7 +119,7 @@ void wbsl_lockFlash(void);
 void init_interrupt_vector(void);
 
 #endif
-
+#define WBSL_BOOT_TEST
 // *************************************************************************************************
 // @fn          main
 // @brief       Starting point of the RFBSL, calls the needed routines prior to starting
@@ -152,6 +152,22 @@ int main(){
     display_wbsl(LINE2, 0);
 #endif
 
+#if defined(WBSL_BOOT_TEST)
+      {
+    #define REPEAT_TEST_COUNT (5)
+        uint8_t repeat = REPEAT_TEST_COUNT;
+        display_chars(LINE2, (uint8_t *)" TEST");
+        while (repeat--)
+        {
+            wbsl_setTimer(CONV_MS_TO_TICKS(900));
+            while (!(TA0CCTL1 & CCIFG)) ;
+            wbsl_resetTimer();
+            display_chars(LINE1, itoa(wbsl_progress, 2, 0));
+        }
+        PMMCTL0 = PMMPW | PMMSWBOR; // generate BOR
+      }
+#else //!WBSL_BOOT_TEST
+
     while (1){
 
 #ifdef RAM_BASED_RFBSL
@@ -167,6 +183,8 @@ int main(){
         PMMCTL0 = PMMPW | PMMSWBOR; // generate BOR
 
     }
+#endif 
+    return 0;
 }
 
 // *************************************************************************************************

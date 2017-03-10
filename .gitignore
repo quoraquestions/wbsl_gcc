@@ -6,7 +6,6 @@ nohup.out
 *.s
 *.swp
 cscope.out
-wbsl.disassembly
 
 ### CLion project files ###
 *.tgz
