@@ -26,15 +26,18 @@ OBJS := $(patsubst %.c,%.o,$(SRCS))
 # Append specific CFLAGS/LDFLAGS
 #DEBUG := $(shell grep "^\#define CONFIG_DEBUG" project_defs.h)
 #DEBUG := y
-ifeq ($(DEBUG),)
-TARGET	:= RELEASE
-CFLAGS	+= $(CFLAGS_REL)
-LDFLAGS	+= $(LDFLAGS_REL)
-else
-TARGET	:= DEBUG
-CFLAGS	+= $(CFLAGS_DBG)
-LDFLAGS	+= $(LDFLAGS_DBG)
-endif
+#ifeq ($(DEBUG),)
+#TARGET	:= RELEASE
+#CFLAGS	+= $(CFLAGS_REL)
+#LDFLAGS	+= $(LDFLAGS_REL)
+#else
+#TARGET	:= DEBUG
+#CFLAGS	+= $(CFLAGS_DBG)
+#LDFLAGS	+= $(LDFLAGS_DBG)
+#endif
+
+CFLAGS += $(CFLAGS_REL_NOSTRIP)
+LDFLAGS += $(LDFLAGS_REL_NOSTRIP)
 
 # rebuild if CFLAGS changed, as suggested in:
 # http://stackoverflow.com/questions/3236145/force-gnu-make-to-rebuild-objects-affected-by-compiler-definition/3237349#3237349
