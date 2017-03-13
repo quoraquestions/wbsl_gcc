@@ -397,5 +397,5 @@ SECTIONS
 /* Include peripherals memory map                                           */
 /****************************************************************************/
 
-INCLUDE cc430f6137_symbols.ld
+INCLUDE wbsl_cc430f6137_symbols.ld
 

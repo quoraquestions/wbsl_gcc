@@ -10,13 +10,13 @@ LINKER_FILE = "./wbsl_cc430f6137.ld"
 # http://gcc.gnu.org/ml/gcc-help/2003-08/msg00128.html
 #
 CFLAGS      += $(CC_CMACH) $(CC_DMACH) -Wall  
-CFLAGS      += -fno-force-addr -finline-limit=1 -fno-schedule-insns
+CFLAGS      += -fno-force-addr -finline-limit=1 -fno-schedule-insns -minrt
 
 CFLAGS      += -mhwmult=none -fshort-enums -Wl,-Map=wbsl.map,-verbose -T$(LINKER_FILE)
 LDFLAGS     = -L$(MSP430_TI)/include 
 
 CFLAGS_REL  += -Os -fdata-sections -ffunction-sections -fomit-frame-pointer 
-LDFLAGS_REL += -Wl,--gc-sections -Wl,-s 
+LDFLAGS_REL += -Wl,--gc-sections -Wl,-s
 
 CFLAGS_DBG  += -O1 -g3 -gdwarf-2 -ggdb
 LDFLAGS_DBG += -Wl,--gc-sections
