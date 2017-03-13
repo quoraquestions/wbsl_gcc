@@ -31,7 +31,7 @@
 /* ============================================================================ */
 
 /* This file supports CC430F6137 devices. */
-/* Version: 1.194 */
+/* Version: 1.198 */
 /* Default linker script, for normal executables */
 
 OUTPUT_ARCH(msp430)
@@ -40,7 +40,13 @@ ENTRY(_start)
 MEMORY {
   SFR              : ORIGIN = 0x0000, LENGTH = 0x0010 /* END=0x0010, size 16 */
   BSL              : ORIGIN = 0x1000, LENGTH = 0x0800
-  RAM              : ORIGIN = 0x1D30, LENGTH = 0x0FFE /* END=0x2BFD, size 4094 */
+  RAM              : ORIGIN = 0x1C00, LENGTH = 0x0FFE /* END=0x2BFD, size 4094 */
+  INFOMEM          : ORIGIN = 0x1800, LENGTH = 0x0200 /* END=0x19FF, size 512 as 4 128-byte segments */
+  INFOA            : ORIGIN = 0x1980, LENGTH = 0x0080 /* END=0x19FF, size 128 */
+  INFOB            : ORIGIN = 0x1900, LENGTH = 0x0080 /* END=0x197F, size 128 */
+  INFOC            : ORIGIN = 0x1880, LENGTH = 0x0080 /* END=0x18FF, size 128 */
+  INFOD            : ORIGIN = 0x1800, LENGTH = 0x0080 /* END=0x187F, size 128 */
+  ROM (rx)         : ORIGIN = 0x8000, LENGTH = 0x7F80 /* END=0xFF7F, size 32640 */
   VECT1            : ORIGIN = 0xFF80, LENGTH = 0x0002
   VECT2            : ORIGIN = 0xFF82, LENGTH = 0x0002
   VECT3            : ORIGIN = 0xFF84, LENGTH = 0x0002
@@ -197,6 +203,15 @@ SECTIONS
     KEEP (*(.fini_array))
     KEEP (*(SORT(.fini_array.*)))
     PROVIDE (__fini_array_end = .);
+  } > RAM
+
+  /* Note: This is a separate .rodata section for sections which are
+     read only but which older linkers treat as read-write.
+     This prevents older linkers from marking the entire .rodata
+     section as read-write.  */
+  .rodata2 : 
+  {
+    . = ALIGN(2);
     *(.eh_frame_hdr)
     KEEP (*(.eh_frame))
 
@@ -220,7 +235,6 @@ SECTIONS
     KEEP (*(EXCLUDE_FILE (*crtend*.o ) .dtors))
     KEEP (*(SORT(.dtors.*)))
     KEEP (*(.dtors))
-
   } > RAM
 
   .text :
@@ -267,7 +281,7 @@ SECTIONS
     _edata = .;
     PROVIDE (edata = .);
     PROVIDE (__dataend = .);
-  } > RAM
+  } > RAM AT>RAM
 
   /* Note that crt0 assumes this is a multiple of two; all the
      start/stop symbols are also assumed word-aligned.  */
@@ -328,6 +342,11 @@ SECTIONS
     *(.stack)
   }
 
+  .infoA     : {} > INFOA              /* MSP430 INFO FLASH MEMORY SEGMENTS */
+  .infoB     : {} > INFOB
+  .infoC     : {} > INFOC
+  .infoD     : {} > INFOD
+
   .MSP430.attributes 0 :
   {
     KEEP (*(.MSP430.attributes))
@@ -378,5 +397,5 @@ SECTIONS
 /* Include peripherals memory map                                           */
 /****************************************************************************/
 
-INCLUDE wbsl_cc430f6137_symbols.ld
+INCLUDE cc430f6137_symbols.ld
 
