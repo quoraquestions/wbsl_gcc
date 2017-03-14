@@ -61,7 +61,7 @@ wbsl.txt: wbsl.elf
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 install: wbsl.txt
-	contrib/ChronosTool.py rfbsl -m $< $<
+	contrib/ChronosTool.py -v rfbsl -m $< $<
 
 usb-install: wbsl.elf
 	mspdebug rf2500 "prog wbsl.elf"

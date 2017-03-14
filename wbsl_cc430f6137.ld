@@ -185,6 +185,26 @@ SECTIONS
     KEEP (*(.resetvec))
   } > RESETVEC
 
+  .text :
+  {
+    . = ALIGN(2);
+    PROVIDE (_start = .);
+    KEEP (*(SORT(.crt_*)))
+    *(.lowtext .text .stub .text.* .gnu.linkonce.t.* .text:*)
+    KEEP (*(.text.*personality*))
+    /* .gnu.warning sections are handled specially by elf32.em.  */
+    *(.gnu.warning)
+    *(.interp .hash .dynsym .dynstr .gnu.version*)
+    PROVIDE (__etext = .);
+    PROVIDE (_etext = .);
+    PROVIDE (etext = .);
+    . = ALIGN(2);
+    KEEP (*(.init))
+    KEEP (*(.fini))
+    KEEP (*(.tm_clone_table))
+  } > RAM AT>RAM
+
+
   .rodata : 
   {
     . = ALIGN(2);
@@ -203,7 +223,7 @@ SECTIONS
     KEEP (*(.fini_array))
     KEEP (*(SORT(.fini_array.*)))
     PROVIDE (__fini_array_end = .);
-  } > RAM
+  } > RAM AT>RAM
 
   /* Note: This is a separate .rodata section for sections which are
      read only but which older linkers treat as read-write.
@@ -235,26 +255,8 @@ SECTIONS
     KEEP (*(EXCLUDE_FILE (*crtend*.o ) .dtors))
     KEEP (*(SORT(.dtors.*)))
     KEEP (*(.dtors))
-  } > RAM
+  } > RAM AT>RAM
 
-  .text :
-  {
-    . = ALIGN(2);
-    PROVIDE (_start = .);
-    KEEP (*(SORT(.crt_*)))
-    *(.lowtext .text .stub .text.* .gnu.linkonce.t.* .text:*)
-    KEEP (*(.text.*personality*))
-    /* .gnu.warning sections are handled specially by elf32.em.  */
-    *(.gnu.warning)
-    *(.interp .hash .dynsym .dynstr .gnu.version*)
-    PROVIDE (__etext = .);
-    PROVIDE (_etext = .);
-    PROVIDE (etext = .);
-    . = ALIGN(2);
-    KEEP (*(.init))
-    KEEP (*(.fini))
-    KEEP (*(.tm_clone_table))
-  } > RAM
 
   .data : 
   {
@@ -298,7 +300,7 @@ SECTIONS
     . = ALIGN(2);
     *(COMMON)
     PROVIDE (__bssend = .);
-  } > RAM
+  } > RAM AT>RAM
   PROVIDE (__bsssize = SIZEOF(.bss));
 
   /* This section contains data that is not initialised during load
@@ -311,7 +313,7 @@ SECTIONS
     . = ALIGN(2);
     PROVIDE (__noinit_end = .);
     end = .;
-  } > RAM
+  } > RAM AT>RAM
 
   /* We create this section so that "end" will always be in the
      RAM region (matching .stack below), even if the .bss
@@ -331,7 +333,7 @@ SECTIONS
     LONG(0);
     __heap_end__ = .;
     __HeapLimit = __heap_end__;
-  } > RAM
+  } > RAM AT>RAM
   /* WARNING: Do not place anything in RAM here.
      The heap section must be the last section in RAM and the stack
      section must be placed at the very end of the RAM region.  */

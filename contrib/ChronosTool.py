@@ -661,7 +661,7 @@ q""")
         self.transmitburst( updater )
         print "Sent Ramloader.."
         print "Sending new firmware.."
-        self.transmitburst( data )
+#        self.transmitburst( data )
         time.sleep( 1 )
         print "Done!"
 
