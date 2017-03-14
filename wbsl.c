@@ -127,7 +127,7 @@ void init_interrupt_vector(void);
 // @param       none
 // @return      uint8_t  exit status
 // *************************************************************************************************
-
+#if 0
 volatile uint8_t stop_exec = 0;
 __attribute__((naked, section(".crt_0042"), used))
 static void crt_0042(void)
@@ -135,7 +135,7 @@ static void crt_0042(void)
     WDTCTL = WDTPW + WDTHOLD;        // Stop watchdog timer
     while (!stop_exec);
 }
-
+#endif
 int main(){
     WDTCTL = WDTPW + WDTHOLD;        // Stop watchdog timer
 
